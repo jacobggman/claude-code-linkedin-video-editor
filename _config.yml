@@ -1,0 +1,25 @@
+# GitHub Pages: renders README.md as the project's home page (jacobggman.github.io/claude-code-linkedin-video-editor)
+title: LinkedIn Video Editor for Claude Code
+description: >-
+  Claude Code skill that edits LinkedIn videos: raw talking-head video in, finished 9:16 video out, with karaoke
+  captions, Hebrew RTL subtitles, green-screen removal, the LinkedIn safe zone, motion graphics and a Connect ending.
+url: https://jacobggman.github.io
+baseurl: /claude-code-linkedin-video-editor
+lang: en
+author: Jacob Galam
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /docs/banner.png
+exclude:
+  - SKILL.md
+  - NOTICE.md
+  - scripts/
+  - references/
+  - tests/
+  - config.example.json

@@ -1,0 +1,7 @@
+The font files in this folder are from Google Fonts and are licensed under the SIL Open Font License, Version 1.1
+(https://openfontlicense.org): Inter, Inter Tight, Instrument Serif, DM Serif Display, Montserrat, JetBrains Mono,
+Caveat, Heebo, Secular One, Suez One. Copyright belongs to their respective authors (see each family's page on
+https://fonts.google.com).
+
+The OFL allows the fonts to be used, studied, modified and redistributed freely, including bundled with software,
+as long as they are not sold on their own.

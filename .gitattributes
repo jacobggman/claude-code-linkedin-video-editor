@@ -1,0 +1,5 @@
+# Git for Windows converts line endings on checkout by default. A shell script with CRLF endings does not run.
+*.sh text eol=lf
+*.py text eol=lf
+*.woff2 binary
+*.mp3 binary

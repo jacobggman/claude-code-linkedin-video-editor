@@ -1,0 +1,10 @@
+{
+ "name": "Your Name",
+ "photo": "~/Pictures/profile.jpg",
+ "linkedinSubtitle": {"he": "בואו נתחבר בלינקדאין!", "en": "Let's connect on LinkedIn!"},
+ "language": "en",
+ "defaultLook": "bold",
+ "clipsDir": "~/Downloads",
+ "projectsDir": "~/reel-edits",
+ "setupComplete": false
+}

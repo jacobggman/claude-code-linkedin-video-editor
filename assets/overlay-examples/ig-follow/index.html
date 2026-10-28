@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=760, height=1000" />
+<link rel="stylesheet" href="assets/fonts/fonts.css" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:760px;height:1000px;overflow:hidden;background:transparent}
+#root{position:relative;width:760px;height:1000px;overflow:hidden;background:transparent;
+  font-family:'Inter','Apple Color Emoji',sans-serif;font-weight:500;color:#fff;-webkit-font-smoothing:antialiased}
+#card{position:absolute;inset:0;border-radius:40px;overflow:hidden;background:#000}
+.abs{position:absolute}
+svg{display:block}
+
+/* top bar */
+#topbar{left:0;top:0;width:760px;height:100px}
+#back{left:22px;top:32px}
+#uname{left:78px;top:28px;display:flex;align-items:center;gap:10px;font-weight:600;font-size:36px;letter-spacing:-.4px;line-height:44px}
+#bell{left:600px;top:30px}
+#dots{left:676px;top:32px}
+
+/* profile row */
+#ring{left:22px;top:108px;width:184px;height:184px;border-radius:50%;
+  background:conic-gradient(from 210deg,#FEDA75,#FA7E1E,#D62976,#962FBF,#4F5BD5,#D62976,#FA7E1E,#FEDA75);padding:5px}
+#ring .gap{width:100%;height:100%;border-radius:50%;background:#000;padding:5px}
+#ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+#stats{left:226px;top:148px;width:520px;display:flex;justify-content:space-around;text-align:center}
+.st b{display:block;font-weight:600;font-size:38px;line-height:46px;letter-spacing:-.4px}
+.st span{display:block;font-size:26px;line-height:34px;color:#fff}
+
+/* bio */
+#bio{left:28px;top:306px;width:710px;font-size:24px;line-height:33px}
+#bio .nm{font-weight:600;font-size:28px;line-height:36px;margin-bottom:2px}
+#bio .ln{white-space:nowrap}
+#bio .link{color:#E0F1FF;font-weight:600;display:flex;align-items:center;gap:8px}
+
+/* buttons */
+#btns{left:28px;top:494px;width:704px;height:68px;display:flex;gap:8px}
+.btn{height:68px;border-radius:16px;background:#363636;display:flex;align-items:center;justify-content:center;
+  font-weight:600;font-size:30px;letter-spacing:-.2px}
+#fbtn{width:312px;background:#0095F6;position:relative}
+#msg{width:312px}
+#padd{width:64px}
+#ftxt2{display:none;align-items:center;gap:10px}
+
+/* grid */
+#grid{left:0;top:578px;width:760px;display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+#grid .t{height:337px;overflow:hidden;background:#111;position:relative}
+#grid img{width:100%;height:100%;object-fit:cover;display:block}
+#grid .ri{position:absolute;right:12px;top:12px}
+
+/* backdrop + sheet */
+#dim{inset:0;background:#000}
+#sheet{left:0;top:440px;width:760px;height:560px;background:#262626;border-radius:30px 30px 0 0}
+#handle{left:348px;top:14px;width:64px;height:7px;border-radius:4px;background:#6b6b6b}
+#ctitle{left:0;top:36px;width:760px;text-align:center;font-weight:600;font-size:29px;line-height:38px}
+#cdiv{left:0;top:92px;width:760px;height:1px;background:#3a3a3a}
+#list{left:0;top:96px;width:760px;height:300px;overflow:hidden}
+.cm{position:absolute;left:0;width:760px;height:100px}
+.cm .av{position:absolute;left:26px;top:16px;width:58px;height:58px;border-radius:50%;overflow:hidden}
+.cm .tx{position:absolute;left:102px;top:14px;width:560px}
+.cm .u{font-size:24px;line-height:31px;font-weight:600}
+.cm .u i{font-style:normal;font-weight:500;color:#A8A8A8;margin-left:8px}
+.cm .c{font-size:28px;line-height:36px;font-weight:500}
+.cm .ht{position:absolute;left:700px;top:30px;width:32px;height:32px}
+.cm .ht svg{position:absolute;inset:0}
+#oldc{left:0;top:0;width:760px;height:300px}
+.dimc{opacity:.6}
+#newc{top:0}
+#newbg{position:absolute;inset:0;background:rgba(255,255,255,.07)}
+.lav{display:flex;align-items:center;justify-content:center;font-weight:600;font-size:26px;color:#fff}
+#emo{left:0;top:398px;width:760px;height:52px;display:flex;justify-content:space-around;align-items:center;font-size:36px;padding:0 20px;
+  font-family:'Apple Color Emoji',sans-serif;border-top:1px solid #3a3a3a}
+#ibar{left:0;top:456px;width:760px;height:104px}
+#iav{left:26px;top:15px;width:62px;height:62px;border-radius:50%;overflow:hidden}
+#pill{left:104px;top:12px;width:630px;height:68px;border-radius:34px;border:2px solid #4a4a4a;display:flex;align-items:center;padding:0 24px}
+#field{flex:1;display:flex;align-items:center;font-size:28px;line-height:36px;height:36px;white-space:nowrap}
+#ph{color:#8E8E8E}
+.ch{display:none;font-weight:600}
+#caret{display:inline-block;width:3px;height:34px;background:#0095F6;margin:0 2px 0 1px;border-radius:1px}
+#post{font-weight:600;font-size:28px;color:#0095F6;opacity:.42}
+
+/* touch indicator */
+#dot,#ripple{left:0;top:0;width:72px;height:72px;margin:-36px 0 0 -36px;border-radius:50%}
+#dot{background:radial-gradient(circle,rgba(255,255,255,.72) 0%,rgba(255,255,255,.55) 55%,rgba(255,255,255,.35) 100%);
+  border:2px solid rgba(255,255,255,.85);box-shadow:0 0 0 1px rgba(0,0,0,.25),0 6px 18px rgba(0,0,0,.35)}
+#ripple{border:4px solid rgba(255,255,255,.9);background:rgba(255,255,255,.12)}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="2.9" data-width="760" data-height="1000">
+<div id="card">
+
+  <div id="topbar" class="abs">
+    <svg id="back" class="abs" width="36" height="36" viewBox="0 0 24 24"><path d="M15.5 4 7.5 12l8 8" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div id="uname" class="abs">yourhandle
+      <svg width="28" height="28" viewBox="-1 -1 26 26"><polygon points="12.00,0.00 14.64,2.15 18.00,1.61 19.21,4.79 22.39,6.00 21.85,9.36 24.00,12.00 21.85,14.64 22.39,18.00 19.21,19.21 18.00,22.39 14.64,21.85 12.00,24.00 9.36,21.85 6.00,22.39 4.79,19.21 1.61,18.00 2.15,14.64 0.00,12.00 2.15,9.36 1.61,6.00 4.79,4.79 6.00,1.61 9.36,2.15" fill="#0095F6" stroke="#0095F6" stroke-width="1.6" stroke-linejoin="round"/><path d="M7.4 12.3l3.1 3.1 6.2-6.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <svg id="bell" class="abs" width="40" height="40" viewBox="0 0 24 24"><path d="M12 3.2a5.6 5.6 0 0 0-5.6 5.6v3.6c0 .9-.3 1.8-.9 2.5L4.6 16.2c-.4.5 0 1.3.6 1.3h13.6c.7 0 1-.8.6-1.3l-.9-1.3c-.6-.7-.9-1.6-.9-2.5V8.8A5.6 5.6 0 0 0 12 3.2z M9.6 20a2.5 2.5 0 0 0 4.8 0" fill="none" stroke="#fff" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"/></svg>
+    <svg id="dots" class="abs" width="40" height="36" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2" fill="#fff"/><circle cx="12" cy="12" r="2" fill="#fff"/><circle cx="19" cy="12" r="2" fill="#fff"/></svg>
+  </div>
+
+  <div id="ring" class="abs"><div class="gap"><img src="inputs/pfp.jpg" alt="" /></div></div>
+  <div id="stats" class="abs">
+    <div class="st"><b>248</b><span>posts</span></div>
+    <div class="st"><b>12.4K</b><span>followers</span></div>
+    <div class="st"><b>180</b><span>following</span></div>
+  </div>
+
+  <div id="bio" class="abs">
+    <div class="nm">Your Name</div>
+    <div class="ln">Making AI simple for busy people ⚡️</div>
+    <div class="ln">Daily builds, tools and workflows</div>
+    <div class="ln">⬇️ Free guides below ⬇️</div>
+    <div class="ln link"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M10 13.5a4.6 4.6 0 0 0 6.9.5l3-3a4.6 4.6 0 0 0-6.5-6.5l-1.7 1.7M14 10.5a4.6 4.6 0 0 0-6.9-.5l-3 3a4.6 4.6 0 0 0 6.5 6.5l1.7-1.7" fill="none" stroke="#E0F1FF" stroke-width="2.2" stroke-linecap="round"/></svg>yourlink.com</div>
+  </div>
+
+  <div id="btns" class="abs">
+    <div id="fbtn" class="btn"><span id="ftxt1">Follow</span><span id="ftxt2">Following<svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 9l7 7 7-7" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <div id="msg" class="btn">Message</div>
+    <div id="padd" class="btn"><svg width="34" height="34" viewBox="0 0 24 24"><circle cx="9.5" cy="8" r="3.8" fill="none" stroke="#fff" stroke-width="2"/><path d="M2.8 20c.6-3.6 3.3-5.6 6.7-5.6s6.1 2 6.7 5.6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M19 8v6M16 11h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div>
+  </div>
+
+  <div id="grid" class="abs">
+    <div class="t"><img src="inputs/t1.jpg" alt="" /></div>
+    <div class="t"><img src="inputs/t2.jpg" alt="" /></div>
+    <div class="t"><img src="inputs/t3.jpg" alt="" /></div>
+    <div class="t"><img src="inputs/t4.jpg" alt="" /></div>
+    <div class="t"><img src="inputs/t5.jpg" alt="" /></div>
+    <div class="t"><img src="inputs/t6.jpg" alt="" /></div>
+  </div>
+
+  <div id="dim" class="abs"></div>
+
+  <div id="sheet" class="abs">
+    <div id="handle" class="abs"></div>
+    <div id="ctitle" class="abs">Comments</div>
+    <div id="cdiv" class="abs"></div>
+    <div id="list" class="abs">
+      <div id="oldc" class="abs">
+        <div class="cm dimc" style="top:8px">
+          <div class="av lav" style="background:linear-gradient(135deg,#7b5cff,#d14bd1)">J</div>
+          <div class="tx"><div class="u">ai.builder.jen<i>2h</i></div><div class="c">this is insane 🔥</div></div>
+          <div class="ht"><svg viewBox="0 0 24 24" width="32" height="32"><path d="M12 20.3 4.6 13a4.7 4.7 0 0 1 6.7-6.7l.7.7.7-.7a4.7 4.7 0 0 1 6.7 6.7z" fill="none" stroke="#A8A8A8" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="cm dimc" style="top:108px">
+          <div class="av lav" style="background:linear-gradient(135deg,#1fa37a,#2b7bd6)">D</div>
+          <div class="tx"><div class="u">dan.automates<i>5h</i></div><div class="c">need this for my agency 🙌</div></div>
+          <div class="ht"><svg viewBox="0 0 24 24" width="32" height="32"><path d="M12 20.3 4.6 13a4.7 4.7 0 0 1 6.7-6.7l.7.7.7-.7a4.7 4.7 0 0 1 6.7 6.7z" fill="none" stroke="#A8A8A8" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        </div>
+      </div>
+      <div id="newc" class="cm" style="top:8px">
+        <div id="newbg"></div>
+        <div class="av"><svg width="58" height="58" viewBox="0 0 58 58"><circle cx="29" cy="29" r="29" fill="#4a4a4a"/><circle cx="29" cy="23" r="10" fill="#9a9a9a"/><path d="M9 50c3-10 11-15 20-15s17 5 20 15" fill="#9a9a9a"/></svg></div>
+        <div class="tx"><div class="u">you<i>now</i></div><div class="c">EDIT</div></div>
+        <div class="ht">
+          <svg id="hout" viewBox="0 0 24 24" width="32" height="32"><path d="M12 20.3 4.6 13a4.7 4.7 0 0 1 6.7-6.7l.7.7.7-.7a4.7 4.7 0 0 1 6.7 6.7z" fill="none" stroke="#A8A8A8" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <svg id="hfill" viewBox="0 0 24 24" width="32" height="32"><path d="M12 20.3 4.6 13a4.7 4.7 0 0 1 6.7-6.7l.7.7.7-.7a4.7 4.7 0 0 1 6.7 6.7z" fill="#FF3040" stroke="#FF3040" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+    <div id="emo" class="abs"><span>❤️</span><span>🙌</span><span>🔥</span><span>👏</span><span>😢</span><span>😍</span><span>😮</span><span>😂</span></div>
+    <div id="ibar" class="abs">
+      <div id="iav" class="abs"><svg width="62" height="62" viewBox="0 0 58 58"><circle cx="29" cy="29" r="29" fill="#4a4a4a"/><circle cx="29" cy="23" r="10" fill="#9a9a9a"/><path d="M9 50c3-10 11-15 20-15s17 5 20 15" fill="#9a9a9a"/></svg></div>
+      <div id="pill" class="abs">
+        <div id="field"><span id="c0" class="ch">E</span><span id="c1" class="ch">D</span><span id="c2" class="ch">I</span><span id="c3" class="ch">T</span><span id="caret"></span><span id="ph">Add a comment…</span></div>
+        <div id="post">Post</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ripple" class="abs"></div>
+  <div id="dot" class="abs"></div>
+</div>
+</div>
+
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({paused:true});
+
+// initial hidden states (outside the timeline)
+gsap.set('#dim',{autoAlpha:0});
+gsap.set('#sheet',{y:600});
+gsap.set('#dot',{x:560,y:880,autoAlpha:0});
+gsap.set('#ripple',{x:183,y:528,autoAlpha:0,scale:.4});
+gsap.set('#caret',{autoAlpha:0});
+gsap.set('#newc',{autoAlpha:0});
+gsap.set('#hfill',{autoAlpha:0});
+
+// 0.00-0.28 card in
+tl.fromTo('#card',{y:60,autoAlpha:0},{y:0,autoAlpha:1,duration:.28,ease:'power2.out'},0);
+
+// 0.30-0.65 touch dot travels to Follow
+tl.to('#dot',{autoAlpha:1,duration:.12,ease:'power1.out'},0.30);
+tl.to('#dot',{x:183,y:528,duration:.35,ease:'power3.inOut'},0.30);
+
+// 0.70 TAP 1
+tl.to('#dot',{scale:.72,duration:.06,ease:'power2.in'},0.64);
+tl.to('#dot',{scale:1.05,autoAlpha:0,duration:.26,ease:'power2.out'},0.72);
+tl.fromTo('#ripple',{scale:.4,autoAlpha:.95},{scale:2.3,autoAlpha:0,duration:.45,ease:'power2.out',immediateRender:false},0.70);
+tl.set('#fbtn',{backgroundColor:'#363636'},0.70);
+tl.set('#ftxt1',{display:'none'},0.70);
+tl.set('#ftxt2',{display:'flex'},0.70);
+tl.fromTo('#fbtn',{scale:.94},{scale:1,duration:.24,ease:'power3.out',immediateRender:false},0.70);
+
+// 0.95-1.20 comments sheet
+tl.to('#dim',{autoAlpha:.55,duration:.25,ease:'power2.out'},0.95);
+tl.to('#sheet',{y:0,duration:.25,ease:'power3.out'},0.95);
+
+// 1.20 caret, 1.25-1.60 typing EDIT
+tl.set('#caret',{autoAlpha:1},1.20);
+tl.set('#ph',{display:'none'},1.25);
+tl.set('#post',{opacity:1},1.25);
+tl.set('#c0',{display:'inline'},1.25);
+tl.set('#c1',{display:'inline'},1.367);
+tl.set('#c2',{display:'inline'},1.483);
+tl.set('#c3',{display:'inline'},1.60);
+tl.set('#caret',{autoAlpha:0},1.66);
+
+// second dot -> Post, 1.75 TAP 2
+tl.set('#dot',{x:560,y:985,scale:1},1.50);
+tl.to('#dot',{autoAlpha:1,duration:.1,ease:'power1.out'},1.50);
+tl.to('#dot',{x:690,y:943,duration:.2,ease:'power3.out'},1.50);
+tl.to('#dot',{scale:.72,duration:.06,ease:'power2.in'},1.69);
+tl.to('#dot',{scale:1.05,autoAlpha:0,duration:.26,ease:'power2.out'},1.77);
+tl.set('#ripple',{x:690,y:943},1.74);
+tl.fromTo('#ripple',{scale:.4,autoAlpha:.95},{scale:2.3,autoAlpha:0,duration:.45,ease:'power2.out',immediateRender:false},1.75);
+tl.fromTo('#post',{scale:.9},{scale:1,duration:.2,ease:'power3.out',immediateRender:false},1.75);
+
+// 1.85 comment posted, input clears
+tl.to('#oldc',{y:100,duration:.32,ease:'power3.out'},1.85);
+tl.fromTo('#newc',{autoAlpha:0,y:-18},{autoAlpha:1,y:0,duration:.3,ease:'power3.out',immediateRender:false},1.85);
+tl.to('#newbg',{autoAlpha:0,duration:.6,ease:'power2.inOut'},2.15);
+tl.set(['#c0','#c1','#c2','#c3'],{display:'none'},1.85);
+tl.set('#ph',{display:'inline'},1.85);
+tl.set('#post',{opacity:.42},1.85);
+tl.set('#caret',{autoAlpha:1},1.86);
+tl.set('#caret',{autoAlpha:0},2.26);
+tl.set('#caret',{autoAlpha:1},2.62);
+
+// 2.20 heart pop
+tl.set('#hout',{autoAlpha:0},2.20);
+tl.fromTo('#hfill',{autoAlpha:0,scale:.3},{autoAlpha:1,scale:1.3,duration:.12,ease:'power2.out',immediateRender:false},2.20);
+tl.to('#hfill',{scale:1,duration:.16,ease:'power2.inOut'},2.33);
+
+tl.set({}, {}, 2.9);
+window.__timelines["main"] = tl;
+</script>
+</body>
+</html>

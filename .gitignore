@@ -1,0 +1,17 @@
+# personal, written on first run
+config.json
+profile/
+.platform.json
+# the skill's own Python environment
+.venv/
+__pycache__/
+*.pyc
+# sound effects are downloaded by setup.py (Pixabay license: no redistribution of the files)
+assets/template/assets/sfx/*.mp3
+assets/template/assets/sfx/*.part
+*.log
+.DS_Store
+node_modules/
+# GitHub Pages local build
+_site/
+.jekyll-cache/

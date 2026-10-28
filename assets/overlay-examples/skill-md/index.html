@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=860, height=1000" />
+<link rel="stylesheet" href="assets/fonts/fonts.css" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:860px;height:1000px;overflow:hidden;background:transparent}
+#root{position:relative;width:860px;height:1000px;overflow:hidden;background:transparent}
+#win{position:absolute;left:0;top:0;width:860px;height:1000px;border-radius:28px;overflow:hidden;background:#141413;
+  transform-origin:50% 60%;font-family:'Inter',sans-serif}
+#winline{position:absolute;inset:0;border-radius:28px;border:1px solid #2A2A28;z-index:50;pointer-events:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+/* title bar */
+#tbar{position:absolute;left:0;top:0;width:860px;height:62px;background:#1C1C1A;border-bottom:1px solid #2A2A28}
+#lights{position:absolute;left:26px;top:24px;display:flex;gap:9px}
+#lights i{display:block;width:14px;height:14px;border-radius:50%}
+#tab{position:absolute;left:112px;top:12px;height:51px;width:228px;background:#141413;border:1px solid #2A2A28;border-bottom:none;
+  border-radius:11px 11px 0 0;display:flex;align-items:center;gap:11px;padding:0 16px;font-size:19px;font-weight:600;color:#ECEAE2}
+#tab::after{content:'';position:absolute;left:14px;right:14px;top:-1px;height:2px;border-radius:2px;background:#D97757}
+#tab .x{margin-left:auto;color:#6E6B63;font-weight:500;font-size:20px;line-height:1}
+#md{width:30px;height:20px;flex:none}
+#tright{position:absolute;right:24px;top:20px;display:flex;gap:16px}
+/* breadcrumb */
+#crumb{position:absolute;left:0;top:62px;width:860px;height:42px;display:flex;align-items:center;gap:9px;padding-left:28px;
+  font-size:16.5px;color:#7D7A71;border-bottom:1px solid #22221F}
+#crumb .s{color:#4F4D47}
+#crumb .e{color:#B9B6AC}
+/* editor */
+#view{position:absolute;left:0;top:104px;width:860px;height:896px;overflow:hidden}
+#code{position:absolute;left:0;top:0;width:860px;padding-top:18px;font-family:'JetBrains Mono',monospace;font-weight:500;
+  font-size:26px;line-height:40px;color:#D6D3C8;font-variant-ligatures:none}
+.r{position:relative;height:40px;white-space:pre;display:flex}
+.ln{width:56px;flex:none;text-align:right;color:#4A4843;font-size:21px;padding-right:0}
+.r .lt{position:absolute;left:82px;top:0}
+.key{color:#D97757}
+.punc{color:#8A877E}
+.val{color:#ECEAE2}
+.desc,.muted{color:#A39F91}
+.fence{color:#5E5C55}
+.hm{color:#ECEAE2;opacity:.55;font-weight:700}
+.h{color:#F6F4EC;font-weight:700}
+.bul{color:#D97757}
+.bm{color:#6A675F}
+.b{color:#F2EFE6;font-weight:700}
+.code{color:#EBC3A8;background:#26241F;border-radius:7px;box-shadow:0 0 0 1px #34312A, 0 0 0 0 transparent;
+  padding:0 2px;margin:0 -2px}
+#hl{position:absolute;left:0;width:860px;height:40px;top:58px;transform-origin:0 50%;
+  background:linear-gradient(90deg,rgba(217,119,87,.26),rgba(217,119,87,.10) 70%,rgba(217,119,87,.04))}
+#hlbar{position:absolute;left:0;top:58px;width:4px;height:40px;background:#D97757}
+#dude{position:absolute;left:0;width:860px;top:1298px;height:80px;
+  background:linear-gradient(90deg,rgba(217,119,87,.20),rgba(217,119,87,.07) 75%,rgba(217,119,87,0))}
+#dudebar{position:absolute;left:0;top:1298px;width:5px;height:80px;background:#D97757;
+  box-shadow:0 0 14px 2px rgba(217,119,87,.55)}
+#ftop{position:absolute;left:0;top:104px;width:860px;height:22px;background:linear-gradient(#141413,rgba(20,20,19,0))}
+#fbot{position:absolute;left:0;bottom:0;width:860px;height:130px;background:linear-gradient(rgba(20,20,19,0),rgba(20,20,19,.85) 60%,#141413)}
+#track{position:absolute;right:8px;top:114px;width:9px;height:876px;border-radius:9px;background:rgba(255,255,255,.025)}
+#thumb{position:absolute;left:0;top:0;width:9px;height:348px;border-radius:9px;background:rgba(236,234,226,.22)}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="2.15" data-width="860" data-height="1000">
+<div id="win">
+<div id="tbar"><div id="lights"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i></div><div id="tab"><svg id="md" viewBox="0 0 30 20"><rect x=".75" y=".75" width="28.5" height="18.5" rx="4" fill="none" stroke="#7FA7D9" stroke-width="1.5"/><path d="M5 14.5V5.5l3.5 4.3 3.5-4.3v9" fill="none" stroke="#7FA7D9" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M21 5.5v8.5M17.6 11l3.4 3.5 3.4-3.5" fill="none" stroke="#7FA7D9" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg><span>SKILL.md</span><span class="x">&times;</span></div><div id="tright"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E6B63" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M12 4v16"/></svg><svg width="22" height="22" viewBox="0 0 24 24" fill="#6E6B63"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></div></div><div id="crumb"><span>.claude</span><span class="s">/</span><span>skills</span><span class="s">/</span><span>video-edit</span><span class="s">/</span><span class="e">SKILL.md</span></div><div id="view"><div id="code"><div id="hl"></div><div id="hlbar"></div><div id="dude"></div><div id="dudebar"></div><div class="r"><span class="ln" id="ln1">1</span><span class="lt"><span class="fence">---</span></span></div>
+<div class="r"><span class="ln" id="ln2">2</span><span class="lt"><span class="key">name</span><span class="punc">:</span><span class="val"> </span><span class="val">video-edit</span></span></div>
+<div class="r"><span class="ln" id="ln3">3</span><span class="lt"><span class="key">description</span><span class="punc">:</span><span class="desc"> </span><span class="desc">Turn </span><span class="desc">raw </span><span class="desc">talking-head </span><span class="desc">clips </span><span class="desc">into </span><span class="desc">a </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">  </span><span class="desc">finished </span><span class="desc">Instagram </span><span class="desc">reel. </span><span class="desc">Picks </span><span class="desc">the </span><span class="desc">best </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">  </span><span class="desc">takes, </span><span class="desc">cuts </span><span class="desc">filler, </span><span class="desc">adds </span><span class="desc">captions, </span><span class="desc">motion </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">  </span><span class="desc">graphics </span><span class="desc">and </span><span class="desc">sound, </span><span class="desc">in </span><span class="desc">the </span><span class="desc">creator&#x27;s </span><span class="desc">chosen </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">  </span><span class="desc">aesthetic.</span></span></div>
+<div class="r"><span class="ln" id="ln4">4</span><span class="lt"><span class="fence">---</span></span></div>
+<div class="r"><span class="ln" id="ln5">5</span><span class="lt"></span></div>
+<div class="r"><span class="ln" id="ln6">6</span><span class="lt"><span class="hm"># </span><span class="h">Video </span><span class="h">Edit</span></span></div>
+<div class="r"><span class="ln" id="ln7">7</span><span class="lt"></span></div>
+<div class="r"><span class="ln" id="ln8">8</span><span class="lt"><span class="tx">Drop </span><span class="tx">your </span><span class="tx">raw </span><span class="tx">clips </span><span class="tx">in </span><span class="tx">a </span><span class="tx">folder </span><span class="tx">and </span><span class="tx">run </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx"></span><span class="code">/video-edit</span><span class="tx">.</span></span></div>
+<div class="r"><span class="ln" id="ln9">9</span><span class="lt"></span></div>
+<div class="r"><span class="ln" id="ln10">10</span><span class="lt"><span class="hm">## </span><span class="h">Workflow</span></span></div>
+<div class="r"><span class="ln" id="ln11">11</span><span class="lt"><span class="bul">1. </span><span class="tx">Transcribe </span><span class="tx">every </span><span class="tx">clip </span><span class="tx">with </span><span class="tx">word-level </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">   </span><span class="tx">timestamps</span></span></div>
+<div class="r"><span class="ln" id="ln12">12</span><span class="lt"><span class="bul">2. </span><span class="tx">Find </span><span class="tx">the </span><span class="tx">cleanest </span><span class="tx">take </span><span class="tx">of </span><span class="tx">each </span><span class="tx">line, </span><span class="tx">cut </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">   </span><span class="tx">false </span><span class="tx">starts </span><span class="tx">and </span><span class="tx">filler</span></span></div>
+<div class="r"><span class="ln" id="ln13">13</span><span class="lt"><span class="bul">3. </span><span class="tx">Assemble </span><span class="tx">the </span><span class="tx">cut </span><span class="tx">at </span><span class="code">1080x1920</span><span class="tx">, </span><span class="tx">punch-ins </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">   </span><span class="tx">from </span><span class="tx">4K</span></span></div>
+<div class="r"><span class="ln" id="ln14">14</span><span class="lt"><span class="bul">4. </span><span class="tx">Cut </span><span class="tx">the </span><span class="tx">creator </span><span class="tx">out </span><span class="tx">of </span><span class="tx">the </span><span class="tx">background </span><span class="tx">(for </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">   </span><span class="tx">text </span><span class="tx">behind </span><span class="tx">them)</span></span></div>
+<div class="r"><span class="ln" id="ln15">15</span><span class="lt"><span class="bul">5. </span><span class="tx">Apply </span><span class="tx">the </span><span class="tx">aesthetic, </span><span class="tx">captions </span><span class="tx">and </span><span class="tx">motion </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">   </span><span class="tx">graphics</span></span></div>
+<div class="r"><span class="ln" id="ln16">16</span><span class="lt"><span class="bul">6. </span><span class="tx">Add </span><span class="tx">sound </span><span class="tx">design, </span><span class="tx">render, </span><span class="tx">check </span><span class="tx">every </span><span class="tx">cut </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">   </span><span class="tx">frame </span><span class="tx">by </span><span class="tx">frame</span></span></div>
+<div class="r"><span class="ln" id="ln17">17</span><span class="lt"></span></div>
+<div class="r"><span class="ln" id="ln18">18</span><span class="lt"><span class="hm">## </span><span class="h">Aesthetics</span></span></div>
+<div class="r"><span class="ln" id="ln19">19</span><span class="lt"><span class="bul">- </span><span class="bm">**</span><span class="b">cool </span><span class="b">girl</span><span class="bm">**</span><span class="punc">:</span><span class="muted"> </span><span class="muted">warm </span><span class="muted">faded </span><span class="muted">grade, </span><span class="muted">lowercase </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">  </span><span class="muted">sans </span><span class="muted">+ </span><span class="muted">big </span><span class="muted">serif </span><span class="muted">italic </span><span class="muted">in </span><span class="muted">butter </span><span class="muted">yellow </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">  </span><span class="code">#FAE67A</span><span class="muted">, </span><span class="muted">handwritten </span><span class="muted">notes, </span><span class="muted">sparkles</span></span></div>
+<div class="r"><span class="ln" id="ln20">20</span><span class="lt"><span class="bul">- </span><span class="bm">**</span><span class="b">cool </span><span class="b">dude</span><span class="bm">**</span><span class="punc">:</span><span class="muted"> </span><span class="muted">dark </span><span class="muted">moody </span><span class="muted">grade, </span><span class="muted">tiny </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">  </span><span class="muted">wide-tracked </span><span class="muted">caps </span><span class="muted">+ </span><span class="muted">heavy </span><span class="muted">serif </span><span class="muted">punch </span><span class="muted">words</span></span></div>
+<div class="r"><span class="ln" id="ln21">21</span><span class="lt"><span class="bul">- </span><span class="bm">**</span><span class="b">bold</span><span class="bm">**</span><span class="punc">:</span><span class="muted"> </span><span class="muted">heavy </span><span class="muted">lowercase </span><span class="muted">words </span><span class="muted">scattered </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">  </span><span class="muted">around </span><span class="muted">the </span><span class="muted">speaker, </span><span class="muted">big </span><span class="muted">words </span><span class="muted">behind </span><span class="muted">the </span><span class="muted">head</span></span></div>
+<div class="r"><span class="ln" id="ln22">22</span><span class="lt"></span></div>
+<div class="r"><span class="ln" id="ln23">23</span><span class="lt"><span class="hm">## </span><span class="h">Tools</span></span></div>
+<div class="r"><span class="ln" id="ln24">24</span><span class="lt"><span class="bul">- </span><span class="code">whisper</span><span class="tx"> </span><span class="tx">for </span><span class="tx">word-level </span><span class="tx">transcripts</span></span></div>
+<div class="r"><span class="ln" id="ln25">25</span><span class="lt"><span class="bul">- </span><span class="code">ffmpeg</span><span class="tx"> </span><span class="tx">for </span><span class="tx">cuts, </span><span class="tx">grades </span><span class="tx">and </span><span class="tx">the </span><span class="tx">final </span><span class="tx">render</span></span></div>
+<div class="r"><span class="ln" id="ln26">26</span><span class="lt"><span class="bul">- </span><span class="code">hyperframes</span><span class="tx"> </span><span class="tx">for </span><span class="tx">captions </span><span class="tx">and </span><span class="tx">motion </span><span class="tx">graphics</span></span></div>
+<div class="r"><span class="ln" id="ln27">27</span><span class="lt"></span></div>
+<div class="r"><span class="ln" id="ln28">28</span><span class="lt"><span class="hm">## </span><span class="h">Rules</span></span></div>
+<div class="r"><span class="ln" id="ln29">29</span><span class="lt"><span class="bul">- </span><span class="tx">Never </span><span class="tx">cover </span><span class="tx">the </span><span class="tx">face</span></span></div>
+<div class="r"><span class="ln" id="ln30">30</span><span class="lt"><span class="bul">- </span><span class="tx">Captions </span><span class="tx">inside </span><span class="tx">Instagram </span><span class="tx">safe </span><span class="tx">zones</span></span></div>
+<div class="r"><span class="ln" id="ln31">31</span><span class="lt"><span class="bul">- </span><span class="tx">Words </span><span class="tx">land </span><span class="tx">on </span><span class="tx">the </span><span class="tx">exact </span><span class="tx">spoken </span><span class="tx">frame</span></span></div>
+<div class="r"><span class="ln" id="ln32">32</span><span class="lt"><span class="bul">- </span><span class="tx">Sound </span><span class="tx">effects </span><span class="tx">subtle, </span><span class="tx">never </span><span class="tx">louder </span><span class="tx">than </span><span class="tx">the </span></span></div>
+<div class="r"><span class="ln"></span><span class="lt"><span class="tx">  </span><span class="tx">voice</span></span></div>
+<div class="r"><span class="ln" id="ln33">33</span><span class="lt"></span></div>
+<div class="r"><span class="ln" id="ln34">34</span><span class="lt"><span class="hm">## </span><span class="h">Output</span></span></div>
+<div class="r"><span class="ln" id="ln35">35</span><span class="lt"><span class="bul">- </span><span class="code">reel.mp4</span><span class="tx">, </span><span class="tx">1080x1920, </span><span class="tx">30fps</span></span></div>
+<div class="r"><span class="ln" id="ln36">36</span><span class="lt"><span class="bul">- </span><span class="tx">a </span><span class="tx">phone-size </span><span class="tx">preview </span><span class="tx">for </span><span class="tx">quick </span><span class="tx">review</span></span></div>
+<div class="r"><span class="ln" id="ln37">37</span><span class="lt"><span class="bul">- </span><span class="tx">an </span><span class="tx">edit </span><span class="tx">log </span><span class="tx">with </span><span class="tx">every </span><span class="tx">cut </span><span class="tx">and </span><span class="tx">why</span></span></div></div></div><div id="ftop"></div><div id="fbot"></div><div id="track"><div id="thumb"></div></div><div id="winline"></div>
+</div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+gsap.set('#win',{autoAlpha:0,y:40,scale:.96});
+gsap.set('#hl',{scaleX:0,autoAlpha:1});
+gsap.set('#hlbar',{autoAlpha:0});
+gsap.set(['#dude','#dudebar'],{autoAlpha:0});
+gsap.set('#code',{y:0});
+gsap.set('#thumb',{y:0});
+tl.to('#win',{autoAlpha:1,y:0,scale:1,duration:.30,ease:'power3.out'},0);
+tl.to('#hl',{scaleX:1,duration:.38,ease:'power2.inOut'},0.15);
+tl.fromTo('#hlbar',{autoAlpha:0},{autoAlpha:1,duration:.15,ease:'power1.out',immediateRender:false},0.15);
+tl.to('#ln2',{color:'#CFCBBF',duration:.2},0.15);
+tl.to('#hl',{autoAlpha:.45,duration:.4,ease:'power1.inOut'},0.62);
+tl.to('#hlbar',{autoAlpha:.5,duration:.4,ease:'power1.inOut'},0.62);
+tl.to('#code',{y:-1362,duration:1.5,ease:'power2.inOut'},0.45);
+tl.to('#thumb',{y:528,duration:1.5,ease:'power2.inOut'},0.45);
+tl.fromTo(['#dude','#dudebar'],{autoAlpha:0},{autoAlpha:1,duration:.16,ease:'power2.out',immediateRender:false},1.08);
+tl.to(['#dude','#dudebar'],{autoAlpha:0,duration:.35,ease:'power1.inOut'},1.55);
+tl.set({}, {}, 2.15);
+window.__timelines = window.__timelines || {};
+window.__timelines["main"] = tl;
+</script>
+</body>
+</html>
