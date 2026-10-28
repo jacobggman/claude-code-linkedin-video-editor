@@ -1,7 +1,14 @@
-<!-- GitHub Pages theme hook (jekyll-theme-cayman includes this file inside <head>) -->
+<!-- GitHub Pages theme hook (jekyll-theme-cayman includes this file inside <head>, after its stylesheet) -->
 <link rel="icon" href="{{ '/docs/favicon.svg' | relative_url }}" type="image/svg+xml">
 <link rel="icon" href="{{ '/docs/favicon-32.png' | relative_url }}" type="image/png" sizes="32x32">
 <link rel="icon" href="{{ '/docs/icon-192.png' | relative_url }}" type="image/png" sizes="192x192">
 <link rel="shortcut icon" href="{{ '/docs/favicon.ico' | relative_url }}">
 <link rel="apple-touch-icon" href="{{ '/docs/apple-touch-icon.png' | relative_url }}">
-<meta name="theme-color" content="#0A66C2">
+<style>
+  /* the banner's colours (LinkedIn blue on dark navy) instead of Cayman's teal */
+  .page-header { background-color: #10131a; background-image: linear-gradient(120deg, #0A66C2 0%, #10131a 85%); }
+  .main-content h1, .main-content h2, .main-content h3, .main-content h4 { color: #0A66C2; }
+  a { color: #0A66C2; }
+  /* the header already shows the README's title */
+  .main-content > h1:first-child { display: none; }
+</style>
