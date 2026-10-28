@@ -29,17 +29,54 @@ Each round is one re-render.
 
 It works in **English and Hebrew**, including right-to-left (RTL) Hebrew captions.
 
+## Quick start: install by pasting one message
+
+No terminal needed.
+
+### Step 1: Open Claude Code
+
+Open Claude Code: the Code tab in the Claude desktop app, or type `claude` in your terminal. The skill renders video
+on your computer, so it needs Claude Code; a regular chat can't run it.
+
+### Step 2: Paste this message
+
+Copy-paste this into the chat and hit Enter:
+
+```
+Install this skill for me: https://github.com/jacobggman/claude-code-linkedin-video-editor (into ~/.claude/skills/video-edit-linkedin)
+```
+
+Claude downloads the skill into your skills folder and tells you when it's ready. Takes a few seconds.
+
+### Step 3: Edit your first video
+
+Type:
+
+```
+/video-edit-linkedin edit ~/Downloads/my-video.mp4
+```
+
+Hit Enter. On your first run, the skill does the following:
+
+- asks your name, a profile photo for the LinkedIn card and your language (English or Hebrew);
+- checks your computer;
+- sets up everything it needs (a few minutes, once).
+
+Just follow the prompts. Then watch the phone copy it sends you and say what to change.
+
 <p align="center">
   <img src="docs/demo.gif" alt="Demo: AI-edited LinkedIn video with karaoke captions, animated cards and a LinkedIn Connect ending" width="300">
 </p>
 
 ## Contents
 
+- [Quick start](#quick-start-install-by-pasting-one-message)
 - [What it does](#what-it-does)
 - [Before and after](#before-and-after)
 - [The LinkedIn video safe zone](#the-linkedin-video-safe-zone-916)
-- [Install](#install)
+- [Requirements and manual install](#requirements-and-manual-install)
 - [Usage](#usage)
+- [Updating](#updating)
 - [How it works](#how-it-works)
 - [FAQ](#faq)
 - [עברית](#עריכת-וידאו-ללינקדאין-עם-claude-code)
@@ -98,10 +135,22 @@ Your face counts as important content: the skill places the speaker so the eyes-
 `build.py --safe` draws these zones in red on preview snapshots, and `scripts/safe_check.py` paints them on frames
 pulled from the final render.
 
-## Install
+## Requirements and manual install
 
-You need [Claude Code](https://claude.com/claude-code), **ffmpeg**, **Node.js 22+** and **Python 3.10+**. The setup
-script checks all of them and prints the exact install command for your OS if something is missing.
+You need [Claude Code](https://claude.com/claude-code), **ffmpeg**, **Node.js 22+** and **Python 3.10+**. You don't
+need to install them yourself first: on the first run the skill checks your computer and prints the exact line to
+paste for anything missing.
+
+| | Mac | Windows (PowerShell) | Linux |
+|---|---|---|---|
+| ffmpeg | `brew install ffmpeg` | `winget install --id Gyan.FFmpeg -e` | `sudo apt install ffmpeg` |
+| Node.js | `brew install node` | `winget install --id OpenJS.NodeJS.LTS -e` | [nodejs.org](https://nodejs.org) |
+| Python | `brew install python` | `winget install --id Python.Python.3.12 -e` | `sudo apt install python3 python3-venv` |
+
+<details>
+<summary>Prefer the terminal? Manual install</summary>
+
+The skill's folder must be named `video-edit-linkedin`.
 
 **macOS / Linux**
 
@@ -130,6 +179,9 @@ py -3 "$env:USERPROFILE\.claude\skills\video-edit-linkedin\scripts\setup.py"
 - downloads the sound effects;
 - ends with `READY`.
 
+Then type `claude` to open Claude Code and run `/video-edit-linkedin`.
+</details>
+
 On first use Claude asks for your name, a profile photo (a file path) and your default language, and saves them to
 `config.json` (see [`config.example.json`](config.example.json)). That file stays on your machine and is git-ignored.
 
@@ -151,6 +203,16 @@ Claude re-renders. Outputs land in `~/reel-edits/<project>/renders/`:
 
 - `<name>-vN.mp4`: full quality, mastered to -16 LUFS;
 - `<name>-vN-phone.mp4`: a 720p copy for review on your phone.
+
+## Updating
+
+Paste this into Claude Code:
+
+```
+Update the video-edit-linkedin skill from https://github.com/jacobggman/claude-code-linkedin-video-editor
+```
+
+Or in a terminal: `git -C "$HOME/.claude/skills/video-edit-linkedin" pull`
 
 ## How it works
 
@@ -233,7 +295,17 @@ sound effects. You need a Claude Code plan to run it.
 
 התמלול בעברית נעשה עם מודל ה־Whisper של ivrit.ai.
 
-התקנה: שכפלו את הריפו לתיקייה `~/.claude/skills/video-edit-linkedin`, הריצו את `scripts/setup.py`, ואז כתבו ב־Claude Code: `/video-edit-linkedin` ואת שם הקובץ.
+**התקנה:** פתחו את Claude Code והדביקו את ההודעה הזו:
+
+</div>
+
+```
+Install this skill for me: https://github.com/jacobggman/claude-code-linkedin-video-editor (into ~/.claude/skills/video-edit-linkedin)
+```
+
+<div dir="rtl">
+
+ואז כתבו `/video-edit-linkedin` ואת שם הקובץ. בהרצה הראשונה הסקיל ישאל לשם שלכם, לתמונת פרופיל ולשפה, ויתקין את כל מה שצריך.
 
 </div>
 
