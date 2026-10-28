@@ -37,7 +37,7 @@ It works in **English and Hebrew**, including right-to-left (RTL) Hebrew caption
 
 - [What it does](#what-it-does)
 - [Before and after](#before-and-after)
-- [The LinkedIn video safe zone](#the-linkedin-video-safe-zone-9x16)
+- [The LinkedIn video safe zone](#the-linkedin-video-safe-zone-916)
 - [Install](#install)
 - [Usage](#usage)
 - [How it works](#how-it-works)
@@ -186,7 +186,7 @@ For a 1080×1920 video:
 - stay out of the 160 px on each side below y 1100, where the action bar sits;
 - leave a 40 px margin on the sides.
 
-The [table above](#the-linkedin-video-safe-zone-9x16) has the details.
+The [table above](#the-linkedin-video-safe-zone-916) has the details.
 
 ### Does it support Hebrew and right-to-left subtitles?
 Yes. Hebrew is a first-class language here:
